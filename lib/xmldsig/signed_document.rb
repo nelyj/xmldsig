@@ -16,9 +16,9 @@ module Xmldsig
       signatures.any? && signatures.all? { |signature| signature.valid?(certificate, &block) }
     end
 
-    def sign(private_key = nil, instruct = true, &block)
+    def sign(private_key = nil, certificate = nil, instruct = true, &block)
       signatures.reverse.each do |signature|
-        signature.sign(private_key, &block) if signature.unsigned? || force
+        signature.sign(private_key, certificate, &block) if signature.unsigned? || force
       end
 
       if instruct
